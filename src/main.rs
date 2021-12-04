@@ -10,7 +10,7 @@ fn main() {
     // day1_task2(read_input("src/inputs/day1.input"));
     // day2_task1(read_input("src/inputs/day2.input"));
     // day2_task2(read_input("src/inputs/day2.input"));
-    day3_task1(read_input("src/inputs/day3.input"));
+    //day3_task1(read_input("src/inputs/day3.input"));
     day3_task2(read_input("src/inputs/day3.input"));
 }
 
