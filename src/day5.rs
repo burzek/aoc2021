@@ -1,5 +1,5 @@
-use std::cmp::{max, min};
-use std::collections::{BTreeMap, HashMap};
+use std::cmp::max;
+use std::collections::HashMap;
 
 fn parse_input(input: String) -> Vec<((u16, u16), (u16, u16))> {
     let lines = input.lines();
@@ -15,6 +15,28 @@ fn parse_input(input: String) -> Vec<((u16, u16), (u16, u16))> {
     }).collect()
 }
 
+fn count_overlaps(data: Vec<((u16, u16), (u16, u16))>) -> usize {
+    let mut map = HashMap::<(i16, i16), u8>::new();
+
+    for from_to in data {   //(from row,col),(to row, col)
+        let rf = from_to.0.0 as i16;
+        let rt = from_to.1.0 as i16;
+        let cf = from_to.0.1 as i16;
+        let ct = from_to.1.1 as i16;
+
+        let dr = (rt - rf).signum();    //row direction
+        let dc = (ct - cf).signum();    //col direction
+        let len = max((rt - rf).abs(), (ct - cf).abs());        //vent length
+
+        for i in 0..len + 1 {
+            *map.entry((rf + dr * i, cf + dc * i)).or_insert(0) += 1;   //add + 1 to key (row,col)
+        }
+    }
+
+    map.values().filter(|v| *v >= &2u8).count()
+
+}
+
 pub fn day5_task1(input: String) {
     let mut from_to_vec = parse_input(input);
 
@@ -25,39 +47,14 @@ pub fn day5_task1(input: String) {
         .map(|x| *x)
         .collect::<Vec<((u16, u16), (u16, u16))>>();
 
-    let mut map = HashMap::<(u16, u16), u8>::new();
-    for from_to in from_to_vec {
-        for r in min(from_to.0.0, from_to.1.0)..max(from_to.0.0, from_to.1.0) + 1 {
-            for c in min(from_to.0.1, from_to.1.1)..max(from_to.0.1, from_to.1.1) + 1 {
-                *map.entry((r, c)).or_insert(0) += 1;
-            }
-        }
-    }
-
-    println!("day 5 task 1: {}", map.values().filter(|v| *v >= &2u8).count());
+    let count = count_overlaps(from_to_vec);
+    println!("day 5 task 1: {}", count);
 }
 
 
 pub fn day5_task2(input: String) {
     let from_to_vec = parse_input(input);
-
-    let mut map = BTreeMap::<(i16, i16), u8>::new();
-    for from_to in from_to_vec {
-        let rf = from_to.0.0 as i16;
-        let rt = from_to.1.0 as i16;
-        let cf = from_to.0.1 as i16;
-        let ct = from_to.1.1 as i16;
-
-        let dr = (rt - rf).signum();
-        let dc = (ct - cf).signum();
-        let len = max((rt - rf).abs(), (ct - cf).abs());
-
-        for i in 0..len + 1 {
-            *map.entry((rf + dr * i, cf + dc * i)).or_insert(0) += 1;
-        }
-
-
-    }
-    println!("day 5 task 2: {}", map.values().filter(|v| *v >= &2u8).count());
+    let count = count_overlaps(from_to_vec);
+    println!("day 5 task 2: {}", count);
 }
 
