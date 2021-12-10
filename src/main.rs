@@ -1,9 +1,10 @@
 use std::fs;
+use crate::day10::{day10_task1, day10_task2};
 //use crate::day4::{day4_task1_task2};
 //use crate::day5::{day5_task1, day5_task2};
-use crate::day6::{day6_task1, day6_task2};
-use crate::day7::{day7_task1, day7_task2};
-use crate::day9::{day9_task1, day9_task2};
+// use crate::day6::{day6_task1, day6_task2};
+// use crate::day7::{day7_task1, day7_task2};
+// use crate::day9::{day9_task1, day9_task2};
 
 
 //mod day1;
@@ -13,6 +14,7 @@ use crate::day9::{day9_task1, day9_task2};
 mod day6;
 mod day7;
 mod day9;
+mod day10;
 
 fn main() {
     // day1_task1(read_input("src/inputs/day1.input"));
@@ -23,8 +25,10 @@ fn main() {
     //day3_task2(read_input("src/inputs/day3.input"));
     // day6_task1(read_input("src/inputs/day6.input"));
     // day6_task2(read_input("src/inputs/day6.input"));
-    day9_task1(read_input("src/inputs/day9.input"));
-    day9_task2(read_input("src/inputs/day9.input"));
+    // day9_task1(read_input("src/inputs/day9.input"));
+    // day9_task2(read_input("src/inputs/day9.input"));
+    day10_task1(read_input("src/inputs/day10.input"));
+    day10_task2(read_input("src/inputs/day10.input"));
 }
 
 pub fn read_input(file_name : &str) -> String {
